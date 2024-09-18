@@ -1,0 +1,24 @@
+class ParenthesesValidator:
+    def __init__(self):
+        self.pairings = {')': '(', '}': '{', ']': '['}
+
+    def is_valid(self, s: str) -> bool:
+        stack = []
+        
+        for char in s:
+            if char in self.pairings.values():  # If it's an opening bracket
+                stack.append(char)
+            elif char in self.pairings.keys():  # If it's a closing bracket
+                if not stack or stack.pop() != self.pairings[char]:
+                    return False
+            else:
+                # If the character is not a valid bracket, ignore it
+                continue
+        
+        return not stack  # If stack is empty, brackets are valid
+validator = ParenthesesValidator()
+print(validator.is_valid("()"))        # True
+print(validator.is_valid("()[]{}"))    # True
+print(validator.is_valid("[)"))        # False
+print(validator.is_valid("({[)]"))     # False
+print(validator.is_valid("{{{"))       # False
